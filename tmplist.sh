@@ -1,15 +1,17 @@
 #!/bin/bash
 
-USEPS="yes"
+USEPS="no"
+FOLDERSTATS="yes"
 OPTS_PS="auxfwww"
 
 #OUTPUT_DIR="/home/alejandro/testoutput"
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
 BASEDIR="/home/alejandro/testoutput"
 LOG_SUFFIX=$(date +%Y%m%d-%H%M%S)
 
-dir1="/home/alejandro/tmp"
-dir2="/home/alejandro/tmp2"
-string1="ttest"
+DIR1="/home/alejandro/tmp"
+DIR2="/home/alejandro/tmp2"
+STRING1="ttest"
 
 # create output file
 create_output_file() {
@@ -58,12 +60,47 @@ print_ps() {
   ps ${OPTS_PS} >> "${LOGFILE}"
 }
 
-#---starting execution here---
+
+find_tmp_folder() {
+  targets=($(ls $1 | grep  "${STRING1}"))
+  #targets=($(ls $1 | grep "ttest"))
+  for FOLDER in ${targets[@]}; do
+    echo ${FOLDER}
+#    stat ${FOLDER}
+  done
+}
+
+print_folderstats() {
+  local LOGFILE="$1"
+  #ps ${OPTS_PS} >> "${LOGFILE}"
+#  echo "STAT OF ${DIR1}" >> "${LOGFILE}"
+#  stat ${DIR1} >> "${LOGFILE}"
+#  print_blankline  "${LOGFILE}"
+#  echo "LIST OF ${DIR1}" >> "${LOGFILE}"
+#  ls -alh ${DIR1} >> "${LOGFILE}"
+}
+
+#print_foldercontents() {
+#  local LOGFILE="$1"
+#  ls -alh ${DIR1} >> "${LOGFILE}"
+#}
+
+###############################
+#---STARTING EXECUTION HERE---#
+###############################
+
 # run the ps report
 if [[ "${USEPS,,}" == "yes" ]]; then
   run_item_report "ps"
 fi
 
+
+# run the folderstats report
+#if [[ "${FOLDERSTATS,,}" == "yes" ]]; then
+#  run_item_report "folderstats"
+#fi
+
+find_tmp_folder "${DIR1}"
 
 #if [ -d $dir1 ]
 
