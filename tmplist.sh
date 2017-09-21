@@ -10,8 +10,8 @@ BASEDIR="/home/alejandro/testoutput"
 LOG_SUFFIX=$(date +%Y%m%d-%H%M%S)
 
 DIR1="/home/alejandro/tmp"
-DIR2="/home/alejandro/tmp2"
-STRING1="ttest"
+#DIR2="/home/alejandro/tmp2"
+STRING1="*ttest*"
 
 # create output file
 create_output_file() {
@@ -62,7 +62,8 @@ print_ps() {
 
 
 find_tmp_folder() {
-  targets=($(ls $1 | grep  "${STRING1}"))
+  targets=($(find $1 -name "${STRING1}"))
+  #targets=($(ls $1 | grep  "${STRING1}"))
   #targets=($(ls $1 | grep "ttest"))
   for FOLDER in ${targets[@]}; do
     echo ${FOLDER}
